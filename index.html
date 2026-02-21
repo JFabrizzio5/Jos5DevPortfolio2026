@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joseph | Tech Architect</title>
+
+    <!-- Meta/SEO -->
+    <meta name="description" content="Joseph - Technology Architect & Full Stack Developer">
+    <meta name="theme-color" content="#09090b">
+
+    <!-- Tailwind CSS (CDN for simple setup) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#09090b',
+                        surface: '#18181b'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- DATA SOURCE -->
+    <script src="data.js"></script>
+
+    <!-- COMPONENTS LIBRARY -->
+    <script src="components/windowManager.js"></script>
+    <script src="components/boot.js"></script>
+    <script src="components/linux.js"></script>
+    <script src="components/macOS.js"></script>
+    <script src="components/windows11.js"></script>
+    <script src="components/portfolioBuilder.js"></script>
+
+</head>
+
+<body class="bg-[#09090b] text-zinc-300 font-sans selection:bg-zinc-800 selection:text-white overflow-hidden">
+
+    <!-- ==========================================
+         SETUP SCREEN (Character Selection Style)
+         ========================================== -->
+    <div id="setup-screen"
+        class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#09090b] text-white transition-colors duration-500 overflow-hidden font-sans">
+
+        <!-- Animated Background Effects -->
+        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none"
+            style="background: repeating-linear-gradient(45deg, #18181b 0, #18181b 2px, transparent 2px, transparent 8px);">
+        </div>
+        <div
+            class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-cyan-900/10 to-[#09090b] pointer-events-none">
+        </div>
+
+        <!-- Top Bar: Weather & Theme -->
+        <div class="absolute top-6 right-8 flex items-center gap-6 z-50">
+            <!-- Weather Widget Desktop -->
+            <div id="setup-weather-widget" class="flex flex-col items-end text-zinc-300">
+                <div class="text-[10px] font-bold opacity-60 uppercase tracking-widest mb-0.5" id="setup-weather-city">
+                    Locating...</div>
+                <div class="flex items-center gap-3">
+                    <div class="text-2xl font-light tracking-tighter" id="setup-weather-temp">--°</div>
+                    <div class="text-right">
+                        <div class="text-[10px] capitalize leading-tight font-bold text-cyan-400"
+                            id="setup-weather-desc">--</div>
+                        <div class="text-[9px] font-mono opacity-50 mt-0.5"><i data-lucide="calendar"
+                                class="w-2.5 h-2.5 inline"></i> <span id="setup-widget-date"></span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Light/Dark Mode (Hidden or styled) -->
+            <button id="setup-theme-toggle"
+                class="p-2 rounded-full hover:bg-white/10 transition-colors text-zinc-300 hidden">
+                <i data-lucide="moon" id="setup-theme-icon" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="relative z-10 w-full max-w-6xl px-6 flex flex-col h-full py-12">
+
+            <!-- HEADER -->
+            <div class="text-center mb-8 shrink-0">
+                <h1 class="text-4xl md:text-5xl font-black italic tracking-tighter uppercase mb-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]"
+                    id="setup-typewriter-title">CHOOSE YOUR SYSTEM</h1>
+                <p class="text-sm font-bold text-zinc-400 tracking-widest uppercase" id="setup-typewriter-body">
+                    INITIALIZE YOUR EXPERIENCE</p>
+            </div>
+
+            <!-- MAIN SELECTION AREA (3 ROWS) -->
+            <div class="flex-1 flex flex-col justify-center gap-8 md:gap-12">
+
+                <!-- ROW 1: LANGUAGE -->
+                <div class="flex flex-col items-center">
+                    <div
+                        class="text-[10px] font-black text-cyan-400 tracking-[0.2em] mb-3 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">
+                        PLAYER LANGUAGE</div>
+                    <div class="flex gap-4 p-1.5 bg-zinc-900/50 backdrop-blur-md rounded-full border border-zinc-800">
+                        <button
+                            class="config-lang-btn px-6 py-2 rounded-full text-xs font-bold transition-all data-[selected=true]:bg-white data-[selected=true]:text-black hover:bg-zinc-800 text-zinc-400"
+                            data-val="en">ENGLISH</button>
+                        <button
+                            class="config-lang-btn px-6 py-2 rounded-full text-xs font-bold transition-all data-[selected=true]:bg-white data-[selected=true]:text-black hover:bg-zinc-800 text-zinc-400"
+                            data-val="es">ESPAÑOL</button>
+                    </div>
+                </div>
+
+                <!-- ROW 2: CHARACTER (OS) SELECTION -->
+                <div class="flex flex-col items-center">
+                    <div
+                        class="text-[10px] font-black text-cyan-400 tracking-[0.2em] mb-4 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">
+                        SELECT CHARACTER</div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl px-4">
+                        <!-- Linux Card -->
+                        <button
+                            class="config-os-btn group relative flex flex-col items-center justify-center h-48 md:h-64 rounded-xl border-2 border-zinc-800 bg-zinc-900/40 backdrop-blur-sm transition-all hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:-translate-y-2 overflow-hidden data-[selected=true]:border-cyan-400 data-[selected=true]:shadow-[0_0_40px_rgba(34,211,238,0.4)] data-[selected=true]:bg-zinc-800/80 data-[selected=true]:-translate-y-2"
+                            data-val="linux">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-b from-transparent to-cyan-900/20 opacity-0 group-hover:opacity-100 group-[[data-selected=true]]:opacity-100 transition-opacity pointer-events-none">
+                            </div>
+                            <div
+                                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 group-[[data-selected=true]]:opacity-100 pointer-events-none">
+                            </div>
+                            <i data-lucide="terminal"
+                                class="w-16 h-16 md:w-24 md:h-24 mb-4 text-zinc-500 group-hover:text-cyan-400 transition-colors drop-shadow-lg group-[[data-selected=true]]:text-cyan-300 pointer-events-none"></i>
+                            <span
+                                class="text-xl md:text-2xl font-black italic tracking-wider text-zinc-500 group-hover:text-white group-[[data-selected=true]]:text-white transition-colors pointer-events-none">LINUX</span>
+                            <span
+                                class="text-[10px] font-bold text-cyan-500 mt-2 uppercase tracking-widest opacity-0 group-[[data-selected=true]]:opacity-100 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_5px_rgba(34,211,238,0.8)] pointer-events-none">Hacker
+                                Class</span>
+                        </button>
+
+                        <!-- macOS Card -->
+                        <button
+                            class="config-os-btn group relative flex flex-col items-center justify-center h-48 md:h-64 rounded-xl border-2 border-zinc-800 bg-zinc-900/40 backdrop-blur-sm transition-all hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] hover:-translate-y-2 overflow-hidden data-[selected=true]:border-purple-400 data-[selected=true]:shadow-[0_0_40px_rgba(168,85,247,0.4)] data-[selected=true]:bg-zinc-800/80 data-[selected=true]:-translate-y-2"
+                            data-val="mac">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-b from-transparent to-purple-900/20 opacity-0 group-hover:opacity-100 group-[[data-selected=true]]:opacity-100 transition-opacity pointer-events-none">
+                            </div>
+                            <div
+                                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-0 group-[[data-selected=true]]:opacity-100 pointer-events-none">
+                            </div>
+                            <i data-lucide="command"
+                                class="w-16 h-16 md:w-24 md:h-24 mb-4 text-zinc-500 group-hover:text-purple-400 transition-colors drop-shadow-lg group-[[data-selected=true]]:text-purple-300 pointer-events-none"></i>
+                            <span
+                                class="text-xl md:text-2xl font-black italic tracking-wider text-zinc-500 group-hover:text-white group-[[data-selected=true]]:text-white transition-colors pointer-events-none">MACOS</span>
+                            <span
+                                class="text-[10px] font-bold text-purple-500 mt-2 uppercase tracking-widest opacity-0 group-hover:opacity-100 group-[[data-selected=true]]:opacity-100 transition-opacity drop-shadow-[0_0_5px_rgba(168,85,247,0.8)] pointer-events-none">Designer
+                                Class</span>
+                        </button>
+
+                        <!-- Windows Card -->
+                        <button
+                            class="config-os-btn group relative flex flex-col items-center justify-center h-48 md:h-64 rounded-xl border-2 border-zinc-800 bg-zinc-900/40 backdrop-blur-sm transition-all hover:border-blue-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] hover:-translate-y-2 overflow-hidden data-[selected=true]:border-blue-400 data-[selected=true]:shadow-[0_0_40px_rgba(59,130,246,0.4)] data-[selected=true]:bg-zinc-800/80 data-[selected=true]:-translate-y-2"
+                            data-val="windows">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-b from-transparent to-blue-900/20 opacity-0 group-hover:opacity-100 group-[[data-selected=true]]:opacity-100 transition-opacity pointer-events-none">
+                            </div>
+                            <div
+                                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-0 group-[[data-selected=true]]:opacity-100 pointer-events-none">
+                            </div>
+                            <i data-lucide="layout-grid"
+                                class="w-16 h-16 md:w-24 md:h-24 mb-4 text-zinc-500 group-hover:text-blue-400 transition-colors drop-shadow-lg group-[[data-selected=true]]:text-blue-300 pointer-events-none"></i>
+                            <span
+                                class="text-xl md:text-2xl font-black italic tracking-wider text-zinc-500 group-hover:text-white group-[[data-selected=true]]:text-white transition-colors pointer-events-none">WINDOWS</span>
+                            <span
+                                class="text-[10px] font-bold text-blue-500 mt-2 uppercase tracking-widest opacity-0 group-hover:opacity-100 group-[[data-selected=true]]:opacity-100 transition-opacity drop-shadow-[0_0_5px_rgba(59,130,246,0.8)] pointer-events-none">Gamer
+                                Class</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ROW 3: COLOR THEME -->
+                <div class="flex flex-col items-center">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div
+                            class="text-[10px] font-black text-cyan-400 tracking-[0.2em] drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">
+                            AURA COLOR</div>
+                        <button id="btn-random-theme"
+                            class="text-[9px] font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-1 rounded transition-colors flex items-center gap-1 border border-zinc-700">
+                            <i data-lucide="dices" class="w-3 h-3"></i> RANDOM
+                        </button>
+                    </div>
+
+                    <div
+                        class="flex flex-wrap justify-center gap-4 md:gap-6 bg-zinc-900/30 p-4 rounded-2xl border border-zinc-800/50 backdrop-blur-lg">
+                        <button
+                            class="config-theme-btn w-10 h-10 md:w-12 md:h-12 rounded-full cursor-pointer transition-all hover:scale-110 active:scale-95 border-2 border-transparent data-[selected=true]:border-white data-[selected=true]:scale-110 data-[selected=true]:shadow-[0_0_20px_var(--tw-shadow-color)]"
+                            data-val="cyan" style="background-color: #06b6d4; --tw-shadow-color: #06b6d4;"></button>
+                        <button
+                            class="config-theme-btn w-10 h-10 md:w-12 md:h-12 rounded-full cursor-pointer transition-all hover:scale-110 active:scale-95 border-2 border-transparent data-[selected=true]:border-white data-[selected=true]:scale-110 data-[selected=true]:shadow-[0_0_20px_var(--tw-shadow-color)]"
+                            data-val="purple" style="background-color: #a855f7; --tw-shadow-color: #a855f7;"></button>
+                        <button
+                            class="config-theme-btn w-10 h-10 md:w-12 md:h-12 rounded-full cursor-pointer transition-all hover:scale-110 active:scale-95 border-2 border-transparent data-[selected=true]:border-white data-[selected=true]:scale-110 data-[selected=true]:shadow-[0_0_20px_var(--tw-shadow-color)]"
+                            data-val="rose" style="background-color: #f43f5e; --tw-shadow-color: #f43f5e;"></button>
+                        <button
+                            class="config-theme-btn w-10 h-10 md:w-12 md:h-12 rounded-full cursor-pointer transition-all hover:scale-110 active:scale-95 border-2 border-transparent data-[selected=true]:border-white data-[selected=true]:scale-110 data-[selected=true]:shadow-[0_0_20px_var(--tw-shadow-color)]"
+                            data-val="amber" style="background-color: #f59e0b; --tw-shadow-color: #f59e0b;"></button>
+                        <button
+                            class="config-theme-btn w-10 h-10 md:w-12 md:h-12 rounded-full cursor-pointer transition-all hover:scale-110 active:scale-95 border-2 border-transparent data-[selected=true]:border-white data-[selected=true]:scale-110 data-[selected=true]:shadow-[0_0_20px_var(--tw-shadow-color)]"
+                            data-val="emerald" style="background-color: #10b981; --tw-shadow-color: #10b981;"></button>
+                        <div class="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden transition-all hover:scale-110 border-2 border-transparent data-[selected=true]:border-white data-[selected=true]:scale-110"
+                            id="custom-color-wrapper">
+                            <input type="color" id="custom-color-picker"
+                                class="absolute -top-3 -left-3 w-16 h-16 cursor-pointer" value="#22d3ee"
+                                title="Custom Aura">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- START BUTTON -->
+            <div class="mt-8 flex justify-center pb-4">
+                <button id="btn-boot"
+                    class="group relative px-12 py-4 bg-transparent overflow-hidden rounded-md transition-all active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 opacity-80 group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute inset-[2px] bg-[#09090b] rounded-[4px] transition-all group-hover:bg-transparent">
+                    </div>
+                    <span
+                        class="relative z-10 flex items-center justify-center gap-3 text-xl font-black italic tracking-[0.2em] text-white">
+                        CONNECT <i data-lucide="zap"
+                            class="w-6 h-6 animate-pulse text-cyan-400 group-hover:text-white"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MAIN APPLICATION (Injected by JS)
+         ========================================== -->
+    <div id="root-layout" class="desktop-environment hidden w-full h-full relative">
+        <!-- Content gets injected here based on OS selected -->
+    </div>
+
+    <!-- APP LOGIC -->
+    <script src="app.js"></script>
+</body>
+
+</html>
