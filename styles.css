@@ -104,6 +104,14 @@ body {
     position: relative;
 }
 
+@media (max-width: 1024px) {
+    .desktop-environment {
+        height: 100%;
+        min-height: 100vh;
+        overflow: auto;
+    }
+}
+
 /* Base Window (The draggable container) */
 .app-window {
     position: absolute;
@@ -125,6 +133,21 @@ body {
     transition: transform 0.1s ease;
 }
 
+@media (max-width: 1024px) {
+    .app-window {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        width: 100vw !important;
+        height: 100% !important;
+        min-height: 100vh !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        resize: none !important;
+    }
+}
+
 /* If dragging happened, JS adds inline left/top, so we remove transform to stop jumping */
 .app-window[style*="left"] {
     transform: none;
@@ -137,6 +160,13 @@ body {
     height: 100%;
     width: 100%;
     position: relative;
+}
+
+@media (max-width: 1024px) {
+    .app-content {
+        height: auto !important;
+        overflow-y: visible !important;
+    }
 }
 
 
